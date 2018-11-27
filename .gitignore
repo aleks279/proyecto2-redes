@@ -1,5 +1,5 @@
 .DS_Store
-documentacion/__latexindent_temp.tex
-documentacion/documentacion.fdb_latexmk
-documentacion/documentacion.fls
-documentacion/documentacion.synctex.gz
+__latexindent_temp.tex
+documentacion.fdb_latexmk
+documentacion.fls
+documentacion.synctex.gz
