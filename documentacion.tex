@@ -186,6 +186,242 @@ NOTA: Todo este proceso debe ser llevado a cabo como administrador. Usar \emph{s
   \end{figure}
 \end{enumerate}
 
+\subsection{CentOS 7}
+\subsubsection{MySQL Server}
+
+\begin{enumerate}
+  \item Asegurarse que \emph{wget} est\'e instalado
+  \begin{lstlisting}[language=bash]
+    $ yum install -y wget
+  \end{lstlisting}
+
+  \item Navegar al folder en el que se desea guardar la descarga
+  \begin{lstlisting}[language=bash]
+    $ wget <link de descarga>
+  \end{lstlisting}
+  
+  \item Agregar el repositorio Yum de MySQL
+  \begin{lstlisting}[language=bash]
+    $ sudo rpm -Uvh <enter the package name here>
+  \end{lstlisting}
+  
+  \item Instalar MySQL
+  \begin{lstlisting}[language=bash]
+    $ sudo yum install mysql-community-server
+  \end{lstlisting}
+  
+  \item Configurar MySQL
+  \begin{lstlisting}[language=bash]
+    $ sudo systemctl start mysqld.service
+    $ sudo grep ‘temporary password’ /var/log/mysqld.log
+    $ mysql -uroot -p
+    $ ALTER USER 'root'@'localhost' IDENTIFIED BY 'mypassword';
+  \end{lstlisting}
+\end{enumerate}
+
+\subsubsection{OpenStack Controller}
+
+\paragraph{Prerequisitos}
+\begin{enumerate}
+  \item Proveer credenciales de administrador para dar acceso de comandos CLI solo a administradores
+  \begin{lstlisting}[language=bash]
+    $ . admin-openrc
+  \end{lstlisting}
+  
+  \item Para crear credenciales de servicio, hay que completar los siguientes pasos:
+  \begin{enumerate}
+    \item Crear un usuario \emph{swift}
+    \begin{lstlisting}[language=bash]
+      $ openstack user create --domain default --password-prompt swift
+      User Password:
+      Repeat User Password:
+      +-----------+----------------------------------+
+      | Field     | Value                            |
+      +-----------+----------------------------------+
+      | domain_id | e0353a670a9e496da891347c589539e9 |
+      | enabled   | True                             |
+      | id        | d535e5cbd2b74ac7bfb97db9cced3ed6 |
+      | name      | swift                            |
+      +-----------+----------------------------------+
+    \end{lstlisting}
+    
+    \item Agregar el rol \emph{admin} al usuario \emph{swift} (este comando no provee salida)
+    \begin{lstlisting}[language=bash]
+      $ openstack role add --project service --user swift admin
+    \end{lstlisting}
+    
+    \item Crear la entidad de servicio \emph{swift}
+    \begin{lstlisting}[language=bash]
+      $ openstack service create --name swift \
+        --description "OpenStack Object Storage" object-store
+      +-------------+----------------------------------+
+      | Field       | Value                            |
+      +-------------+----------------------------------+
+      | description | OpenStack Object Storage         |
+      | enabled     | True                             |
+      | id          | 75ef509da2c340499d454ae96a2c5c34 |
+      | name        | swift                            |
+      | type        | object-store                     |
+      +-------------+----------------------------------+
+    \end{lstlisting}
+  \end{enumerate}
+
+  \item Crear los accesos API para el servicio de almacenamiento de objetos
+  \begin{lstlisting}[language=bash]
+    $ openstack endpoint create --region RegionOne \
+      object-store public http://controller:8080/v1/AUTH_%\(tenant_id\)s
+    +--------------+----------------------------------------------+
+    | Field        | Value                                        |
+    +--------------+----------------------------------------------+
+    | enabled      | True                                         |
+    | id           | 12bfd36f26694c97813f665707114e0d             |
+    | interface    | public                                       |
+    | region       | RegionOne                                    |
+    | region_id    | RegionOne                                    |
+    | service_id   | 75ef509da2c340499d454ae96a2c5c34             |
+    | service_name | swift                                        |
+    | service_type | object-store                                 |
+    | url          | http://controller:8080/v1/AUTH_%(tenant_id)s |
+    +--------------+----------------------------------------------+
+    
+    $ openstack endpoint create --region RegionOne \
+      object-store internal http://controller:8080/v1/AUTH_%\(tenant_id\)s
+    +--------------+----------------------------------------------+
+    | Field        | Value                                        |
+    +--------------+----------------------------------------------+
+    | enabled      | True                                         |
+    | id           | 7a36bee6733a4b5590d74d3080ee6789             |
+    | interface    | internal                                     |
+    | region       | RegionOne                                    |
+    | region_id    | RegionOne                                    |
+    | service_id   | 75ef509da2c340499d454ae96a2c5c34             |
+    | service_name | swift                                        |
+    | service_type | object-store                                 |
+    | url          | http://controller:8080/v1/AUTH_%(tenant_id)s |
+    +--------------+----------------------------------------------+
+    
+    $ openstack endpoint create --region RegionOne \
+      object-store admin http://controller:8080/v1
+    +--------------+----------------------------------+
+    | Field        | Value                            |
+    +--------------+----------------------------------+
+    | enabled      | True                             |
+    | id           | ebb72cd6851d4defabc0b9d71cdca69b |
+    | interface    | admin                            |
+    | region       | RegionOne                        |
+    | region_id    | RegionOne                        |
+    | service_id   | 75ef509da2c340499d454ae96a2c5c34 |
+    | service_name | swift                            |
+    | service_type | object-store                     |
+    | url          | http://controller:8080/v1        |
+    +--------------+----------------------------------+
+  \end{lstlisting}
+\end{enumerate}
+
+\paragraph{Instalaci\'on y configuraci\'on de componentes}
+
+\begin{enumerate}
+  \item Instalar los paquetes
+  \begin{lstlisting}[language=bash]
+    $ yum install openstack-swift-proxy python-swiftclient \
+    python-keystoneclient python-keystonemiddleware \
+    memcached
+  \end{lstlisting}
+
+  \item Obtener el archivo de configuraci\'on para el servicio de proxy desde el repositorio fuente del Objeto de ALmacenamiento
+  \begin{lstlisting}[language=bash]
+    $ # curl -o /etc/swift/proxy-server.conf https://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample?h=stable/mitaka
+  \end{lstlisting}
+
+  \item Editar \emph{/etc/swift/proxy-server.conf} y completar los siguientes pasos:
+  \begin{enumerate}
+    \item En la secci\'on \emph{[DEFAULT]}, configurar el puerto de enlace, usuario y directorio de configuraci\'on
+    \begin{lstlisting}[language=bash]
+      [DEFAULT]
+      ...
+      bind_port = 8080
+      user = swift
+      swift_dir = /etc/swift
+    \end{lstlisting}
+    
+    \item En la secci\'on \emph{[pipeline:main]}, remover los m\'odulos \emph{tempurl} y \emph{tempauth} y agregar los m\'odulos \emph{authtoken} y \emph{keystoneauth}
+    \begin{lstlisting}[language=bash]
+      [pipeline:main]
+      pipeline = catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk ratelimit authtoken keystoneauth container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
+    \end{lstlisting}
+    
+    \item En la secci\'on \emph{[app:proxy-server]}, habilitar la creaci\'on autom\'atica de cuentas
+    \begin{lstlisting}[language=bash]
+      [app:proxy-server]
+      use = egg:swift#proxy
+      ...
+      account_autocreate = True
+    \end{lstlisting}
+    
+    \item En la secci\'on \emph{[filter:keystoneauth]}, configurar los roles de operador
+    \begin{lstlisting}[language=bash]
+      [filter:keystoneauth]
+      use = egg:swift#keystoneauth
+      ...
+      operator_roles = admin,user
+    \end{lstlisting}
+
+    \item En la secci\'on \emph{[filter:authtoken]}, configurar el acceso para el sevicio de identidad
+    \begin{lstlisting}[language=bash]
+      [filter:authtoken]
+      paste.filter_factory = keystonemiddleware.auth_token:filter_factory
+      ...
+      auth_uri = http://controller:5000
+      auth_url = http://controller:35357
+      memcached_servers = controller:11211
+      auth_type = password
+      project_domain_name = default
+      user_domain_name = default
+      project_name = service
+      username = swift
+      password = SWIFT_PASS
+      delay_auth_decision = True
+    \end{lstlisting}
+
+    \item En la secci\'on \emph{[filter:cache]}, configurar la ubicaci\'on de \emph{memcached}
+    \begin{lstlisting}[language=bash]
+      [filter:cache]
+      use = egg:swift#memcache
+      ...
+      memcache_servers = controller:11211
+    \end{lstlisting}
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Docker - Owncloud}
+\begin{enumerate}
+  \item Crear un nuevo folder para el proyecto
+  \item Descargar \emph{docker-compose.yml} del repositorio de ownCloud Docker en GitHub.
+  \item Crear un archivo de configuraci\'on \emph{.env} para la informaci\'on de configuraci\'on
+  \item Iniciar el contenedor
+\end{enumerate}
+\begin{lstlisting}[language=bash]
+  # Create a new project directory
+  $ mkdir owncloud-docker-server
+  
+  $ cd owncloud-docker-server
+  
+  # Copy docker-compose.yml from the GitHub repository
+  $ wget https://raw.githubusercontent.com/owncloud-docker/server/master/docker-compose.yml
+  
+  # Create the environment configuration file
+  cat << EOF > .env
+  OWNCLOUD_VERSION=10.0
+  OWNCLOUD_DOMAIN=localhost
+  ADMIN_USERNAME=admin
+  ADMIN_PASSWORD=admin
+  HTTP_PORT=8080
+  EOF
+  
+  # Build and start the container
+  $ docker-compose up -d
+\end{lstlisting}
+
 
 \section{Bit\'acora de trabajo}
 \subsection{Allan Rojas}
@@ -269,8 +505,12 @@ Total de Horas Trabajadas : 35
   \begin{itemize}
     \item 4 horas - Documentaci\'on.
   \end{itemize}
+  \item 28-11-2018:
+  \begin{itemize}
+    \item 4 horas - Documentaci\'on.
+  \end{itemize}
 \end{itemize}
-Total de horas trabajadas: 33 horas.
+Total de horas trabajadas: 37 horas.
 
 \section{Comentarios finales}
 \begin{itemize}
@@ -300,6 +540,10 @@ Total de horas trabajadas: 33 horas.
   \bibitem{keypairs-ubuntu-mac}
   GitHub. (2018). naturalis/openstack-docs.
   [online] Available at: \url{https://github.com/naturalis/openstack-docs/wiki/Howto:-Creating-and-using-OpenStack-SSH-keypairs-on-Linux-and-OSX}
+
+  \bibitem{openstack-controller}
+  Docs.openstack.org. (2018). \emph{OpenStack Docs: Install and configure the controller node for Red Hat Enterprise Linux and CentOS.}
+  [online] Available at: \url{https://docs.openstack.org/project-install-guide/object-storage/newton/controller-install-rdo.html}
 
 \end{thebibliography}
 
