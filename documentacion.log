@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  27 NOV 2018 19:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  28 NOV 2018 08:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -688,8 +688,8 @@ Overfull \hbox (201.00555pt too wide) in paragraph at lines 410--412
  []
 
 [10] [11]
-/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:530: Undefined control sequence.
-l.530   [online] Available at: \url
+/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:536: Undefined control sequence.
+l.536   [online] Available at: \url
                                    {https://wiki.freepbx.org/display/FOP/Ins...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -698,22 +698,23 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 2237) in paragraph at lines 529--531
+Underfull \hbox (badness 2237) in paragraph at lines 535--537
 []\OT1/cmr/m/n/10 Wiki.freepbx.org. (2018). \OT1/cmr/m/it/10 In-stalling FreePBX 14 on Ubuntu 18.04 -
  []
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 529--531
+Underfull \hbox (badness 1496) in paragraph at lines 535--537
 \OT1/cmr/m/it/10 FreePBX Open-Source Project - Doc-u-men-ta-tion. \OT1/cmr/m/n/10 [on-line] Avail-able at:
  []
 
 
-Overfull \hbox (38.16765pt too wide) in paragraph at lines 529--531
+Overfull \hbox (38.16765pt too wide) in paragraph at lines 535--537
 \OT1/cmr/m/n/10 https://wiki.freepbx.org/display/FOP/Installing+FreePBX+14+on+Ubuntu+18.04 
  []
 
-/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:534: Undefined control sequence.
-l.534   [online] Available at: \url
+[12]
+/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:540: Undefined control sequence.
+l.540   [online] Available at: \url
                                    {https://github.com/naturalis/openstack-d...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -722,18 +723,17 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 533--535
+Underfull \hbox (badness 10000) in paragraph at lines 539--541
 []\OT1/cmr/m/n/10 GitHub. (2018). naturalis/openstack-docs. [on-line] Avail-able at:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 533--535
+Underfull \hbox (badness 10000) in paragraph at lines 539--541
 \OT1/cmr/m/n/10 https://github.com/naturalis/openstack-docs/wiki/Howto:-Deploy-a-
  []
 
-[12]
-/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:538: Undefined control sequence.
-l.538   [online] Available at: \url
+/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:544: Undefined control sequence.
+l.544   [online] Available at: \url
                                    {https://github.com/naturalis/openstack-d...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -742,17 +742,17 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--539
+Underfull \hbox (badness 10000) in paragraph at lines 543--545
 []\OT1/cmr/m/n/10 GitHub. (2018). naturalis/openstack-docs. [on-line] Avail-able at:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 537--539
+Underfull \hbox (badness 10000) in paragraph at lines 543--545
 \OT1/cmr/m/n/10 https://github.com/naturalis/openstack-docs/wiki/Howto:-Creating-
  []
 
-/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:542: Undefined control sequence.
-l.542   [online] Available at: \url
+/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:548: Undefined control sequence.
+l.548   [online] Available at: \url
                                    {https://github.com/naturalis/openstack-d...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -761,17 +761,26 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 541--543
+Underfull \hbox (badness 10000) in paragraph at lines 547--549
 []\OT1/cmr/m/n/10 GitHub. (2018). naturalis/openstack-docs. [on-line] Avail-able at:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 541--543
+Underfull \hbox (badness 10000) in paragraph at lines 547--549
 \OT1/cmr/m/n/10 https://github.com/naturalis/openstack-docs/wiki/Howto:-Creating-
  []
 
-/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:546: Undefined control sequence.
-l.546   [online] Available at: \url
+/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:552: Undefined control sequence.
+l.552   [online] Available at: \url
+                                   {https://www.rosehosting.com/blog/how-to-...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/aleks/Documents/TEC/Redes/proyecto2/documentacion.tex:556: Undefined control sequence.
+l.556   [online] Available at: \url
                                    {https://docs.openstack.org/project-insta...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -780,12 +789,12 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 4242) in paragraph at lines 545--547
+Underfull \hbox (badness 4242) in paragraph at lines 555--557
 []\OT1/cmr/m/n/10 Docs.openstack.org. (2018). \OT1/cmr/m/it/10 Open-Stack Docs: In-stall and con-fig-ure
  []
 
 
-Underfull \hbox (badness 1168) in paragraph at lines 545--547
+Underfull \hbox (badness 1168) in paragraph at lines 555--557
 \OT1/cmr/m/it/10 the con-troller node for Red Hat En-ter-prise Linux and Cen-tOS. \OT1/cmr/m/n/10 [on-
  []
 
@@ -795,15 +804,15 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 3541 strings out of 492649
- 49021 string characters out of 6129622
+ 3542 strings out of 492649
+ 49035 string characters out of 6129622
  162438 words of memory out of 5000000
- 7393 multiletter control sequences out of 15000+600000
+ 7394 multiletter control sequences out of 15000+600000
  6754 words of font info for 24 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,51p,515b,1788s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on documentacion.pdf (14 pages, 322861 bytes).
+Output written on documentacion.pdf (14 pages, 323799 bytes).
 PDF statistics:
  110 PDF objects out of 1000 (max. 8388607)
  58 compressed objects within 1 object stream
